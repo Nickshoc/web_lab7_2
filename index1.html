@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Проверка дружественных чисел</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        function checkFriendlyNumbers(obj) {
+
+            var num1 = Number(obj.num1.value);
+            var num2 = Number(obj.num2.value);
+            
+            function sumOfDivisors(n) {
+                var sum = 0;
+                var divisors = [];
+                for (var i = 1; i <= n / 2; i++) {
+                    if (n % i === 0) {
+                        sum += i;
+                        divisors.push(i);
+                    }
+                }
+                return {sum: sum, divisors: divisors};
+            }
+            
+            var result1 = sumOfDivisors(num1);
+            var result2 = sumOfDivisors(num2);
+            
+            var sum1 = result1.sum;
+            var sum2 = result2.sum;
+            
+            var explanation = "ПРОЦЕСС ПРОВЕРКИ:\n\n";
+            explanation += "Число 1: " + num1 + "\n";
+            explanation += "Делители числа " + num1 + " (без самого числа): " + result1.divisors.join(", ") + "\n";
+            explanation += "Сумма делителей числа " + num1 + ": " + sum1 + "\n\n";
+            
+            explanation += "Число 2: " + num2 + "\n";
+            explanation += "Делители числа " + num2 + " (без самого числа): " + result2.divisors.join(", ") + "\n";
+            explanation += "Сумма делителей числа " + num2 + ": " + sum2 + "\n\n";
+            
+            explanation += "ПРОВЕРКА УСЛОВИЙ:\n";
+            explanation += "1. Сумма делителей числа " + num1 + " (" + sum1 + ") = числу " + num2 + "? ";
+            explanation += (sum1 === num2 ? "ДА" : "НЕТ") + "\n";
+            explanation += "2. Сумма делителей числа " + num2 + " (" + sum2 + ") = числу " + num1 + "? ";
+            explanation += (sum2 === num1 ? "ДА" : "НЕТ") + "\n\n";
+            
+            if (sum1 === num2 && sum2 === num1) {
+                explanation += "✅ ВЫВОД: Числа " + num1 + " и " + num2 + " являются дружественными!\n";
+            } else {
+                explanation += "❌ ВЫВОД: Числа " + num1 + " и " + num2 + " не являются дружественными.\n";
+            }
+            
+            obj.result.value = explanation;
+        }
+        
+    </script>
+</head>
+<body>
+    <h2>Проверка дружественных чисел</h2>
+    
+    <form name="form2">
+        Введите первое число: <input type="text" name="num1" size="10"><br><br>
+        Введите второе число: <input type="text" name="num2" size="10"><br><br>
+        
+        <input type="button" value="Проверка" onclick="checkFriendlyNumbers(form2)">
+        <input type="reset" value="Очистить"><br><br>
+        
+        <label><strong>Процесс проверки и результат:</strong></label><br>
+        <textarea name="result" rows="15" cols="70" readonly></textarea>
+    </form>
+</body>
+</html>
